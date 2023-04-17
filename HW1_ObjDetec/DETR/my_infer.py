@@ -6,12 +6,18 @@ import torch
 from pathlib import Path
 from datasets import Dataset
 from PIL import ImageDraw
+import argparse, os, json
 
 from my_preprocess import *
 from my_dataset import MarinInferDataset, MarinDataset
 
 
-test_path = Path("../images/test/")
+parser = argparse.ArgumentParser()
+parser.add_argument('--test', default='exp', help='test images dir')
+parser.add_argument('--json_name', default='pred.json', help='json name')
+args = parser.parse_args()
+
+test_path = Path(args.test)
 test_set = MarinInferDataset(test_path)
 
 model = AutoModelForObjectDetection.from_pretrained(
@@ -22,6 +28,7 @@ model = AutoModelForObjectDetection.from_pretrained(
 ).to(device="cuda")
 
 #print(valid_set[0])
+rlt = {f: {"boxes": [], "labels":[], "scores":[]} for f in os.listdir(args.test) if ".jpg" in f}
 model.eval()
 with torch.no_grad():
     for i in range(len(test_set)):
@@ -43,8 +50,10 @@ with torch.no_grad():
                 x, y, x2, y2 = tuple(box)
                 draw.rectangle((x, y, x2, y2), outline="red", width=1)
                 draw.text((x, y), model.config.id2label[label.item()], fill="white")
+                rlt[d["image_name"]]["boxes"].append([x, y, x2, y2])
+                rlt[d["image_name"]]["labels"].append(label.item())
+                rlt[d["image_name"]]["scores"].append(score.item())
         image.save("./runs/infer/"+d["image_name"])
         print(d["image_name"])
+json.dump(rlt, open(args.json_name, 'w'))
 
-        #print('RES: ', results[0], '\nLAB: ', labels[0])
-        #input()

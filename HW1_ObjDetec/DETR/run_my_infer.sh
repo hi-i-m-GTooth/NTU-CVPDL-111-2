@@ -1,0 +1,1 @@
+python my_infer.py --test $1 --json_name $2
