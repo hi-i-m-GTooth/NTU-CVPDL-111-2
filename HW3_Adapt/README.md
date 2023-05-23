@@ -1,4 +1,5 @@
 # NTU-CVPDL-HW3
+Poject report - https://hackmd.io/@GTooth/Symrqvkrn
 ## Reminders
 * Please start each model reproducement in outest dir.
 * Recommend using Conda to manage 2 different envs for each models.
