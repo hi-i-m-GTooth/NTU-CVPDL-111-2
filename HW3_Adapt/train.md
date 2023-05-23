@@ -3,6 +3,7 @@
 * Please start each model reproducement in outest dir.
 * Recommend using Conda to manage 2 different envs for each models.
 * If you want to leave the current env, use `conda deactivate`.
+* I trained models on `CUDA 11.4`, `11G Mem` GPU. You might need to change CUDA version when installing pytorch.
 
 ---
 
@@ -31,6 +32,11 @@ cd .. # back to outest dir
 ```
 
 ---
+
+## Train Adaption Model - MIC (Lazy)
+```bash
+bash hw3_train.sh $TRAIN_DIR $VAL_DIR $OUTPUT_BEST_MODEL_PATH
+```
 
 ## Train Adaption Model - MIC
 ### 1. Environment
