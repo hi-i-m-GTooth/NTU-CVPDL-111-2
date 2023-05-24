@@ -14,12 +14,14 @@ export INSTALL_DIR=$PWD/MIC
 cd $INSTALL_DIR
 git clone https://github.com/cocodataset/cocoapi.git
 cd cocoapi/PythonAPI
+find . -type f -name "*.py" -print0 | xargs -0 sed -i 's/np.float/float/g'
 python setup.py build_ext install
 
 # install cityscapesScripts
 cd $INSTALL_DIR
 git clone https://github.com/mcordts/cityscapesScripts.git
 cd cityscapesScripts/
+find . -type f -name "*.py" -print0 | xargs -0 sed -i 's/np.float/float/g'
 python setup.py build_ext install
 
 # install sa-da-faster
