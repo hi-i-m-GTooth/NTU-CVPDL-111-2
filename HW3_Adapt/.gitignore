@@ -2,5 +2,5 @@ hw3_data.zip
 draw.ipynb
 images
 labels
-*.json
+/*.json
 check_your_prediction_valid.py

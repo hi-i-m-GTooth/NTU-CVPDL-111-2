@@ -34,3 +34,4 @@ dist/
 
 *.png
 exps/
+/*.json
